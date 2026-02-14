@@ -1,4 +1,4 @@
-# BifrostPHP-Database
+# Bifrost-Database
 
 Esse é o repositório para armazenar os scripts de banco de dados do projeto Bifrost.
 
@@ -7,7 +7,7 @@ Esse é o repositório para armazenar os scripts de banco de dados do projeto Bi
 1. **Clonar o Repositório**:
 
    ```bash
-   git clone https://github.com/Felipe-Cavalca/BifrostPHP-Database.git
+   git clone https://github.com/Felipe-Cavalca/Bifrost-Database.git
    ```
 
 2. **Configuração do Banco de Dados**:

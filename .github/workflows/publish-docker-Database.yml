@@ -1,4 +1,4 @@
-name: Publish Docker Image API
+name: Publish Docker Image Database
 
 on:
   repository_dispatch:
@@ -20,6 +20,7 @@ jobs:
       - name: Construir e Publicar Imagem Docker do Database
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          TAG=${{ github.event.client_payload.tag }}
 
           docker build -t ghcr.io/${REPO_NAME}:${TAG} -f database/Dockerfile database/
           docker tag ghcr.io/${REPO_NAME}:${TAG} ghcr.io/${REPO_NAME}:latest

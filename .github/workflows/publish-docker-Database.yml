@@ -1,0 +1,27 @@
+name: Publish Docker Image API
+
+on:
+  repository_dispatch:
+    types: [tag-created]
+
+jobs:
+  publish_docker_image_database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Obtém todo o histórico e tags
+          ref: ${{ github.event.client_payload.tag }}
+
+      - name: Login no GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Construir e Publicar Imagem Docker do Database
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+
+          docker build -t ghcr.io/${REPO_NAME}:${TAG} -f database/Dockerfile database/
+          docker tag ghcr.io/${REPO_NAME}:${TAG} ghcr.io/${REPO_NAME}:latest
+          docker push ghcr.io/${REPO_NAME}:${TAG}
+          docker push ghcr.io/${REPO_NAME}:latest
